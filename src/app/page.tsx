@@ -14,7 +14,6 @@ import { QuickCommands } from "src/components/diva/QuickCommands";
 import { SidePanel } from "src/components/diva/SidePanel";
 import { ChatInput } from "src/components/diva/ChatInput";
 import { getChatResponse } from "src/lib/openai";
-import { OPENAI_API_KEY_CONFIG } from "src/config";
 
 interface Message {
   position: "left" | "right";
@@ -57,8 +56,6 @@ export default function Page() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false);
 
-  console.log("openai api key", process.env.OPENAI_API_KEY);
-
   const handleSend = async (text: string) => {
     if (!text.trim()) return;
 
@@ -79,7 +76,7 @@ export default function Page() {
 
     const newChatHistory = [...chatHistory, { role: "user", content: text }];
     const response = await getChatResponse(
-      OPENAI_API_KEY_CONFIG ?? "",
+      process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? "",
       newChatHistory as ChatMessage[]
     );
 
